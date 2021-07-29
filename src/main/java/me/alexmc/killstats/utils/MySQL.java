@@ -6,6 +6,7 @@ import org.bukkit.configuration.ConfigurationSection;
 
 import java.sql.Connection;
 import java.sql.DriverManager;
+import java.sql.PreparedStatement;
 import java.sql.SQLException;
 
 @Getter
@@ -36,9 +37,23 @@ public class MySQL {
     public void connect() {
         try {
             connection = DriverManager.getConnection("jdbc:mysql://" + host + ":" + port + "/" + database + "?characterEncoding=UTF-8", username, password);
+            createTableIfNonExistent();
         } catch (SQLException e) {
             e.printStackTrace();
         }
+    }
+
+    private void createTableIfNonExistent() throws SQLException {
+        String sql = "CREATE TABLE IF NOT EXISTS " +
+                "`killstats` (" +
+                "  `uuid` varchar(45) NOT NULL," +
+                "  `name` varchar(45) NOT NULL," +
+                "  `kills` int NOT NULL," +
+                "  `deaths` int NOT NULL," +
+                "  PRIMARY KEY (`uuid`)" +
+                ") ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci";
+        PreparedStatement preparedStatement = connection.prepareStatement(sql);
+        preparedStatement.execute();
     }
 
     public void disconnect() {
