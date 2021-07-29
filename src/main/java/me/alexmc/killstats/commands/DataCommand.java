@@ -19,21 +19,23 @@ public class DataCommand implements CommandExecutor {
     @Override
     public boolean onCommand(CommandSender sender, Command command, String label, String[] args) {
         if (!(sender instanceof Player)) {
-            sender.sendMessage(ColorAPI.color("&cYou must be a player to execute this command!"));
+            sender.sendMessage(ColorAPI.color(killStats.getConfig().getString("messages.not-player")));
             return true;
         }
 
         Player player = (Player) sender;
         Optional<User> userOptional = Utils.getUser(killStats, player.getUniqueId());
         if (!userOptional.isPresent()) {
-            player.sendMessage(ColorAPI.color("&cThere is not data available for you, please contact an admin."));
+            player.sendMessage(ColorAPI.color(killStats.getConfig().getString("messages.no-data")));
             return true;
         }
 
-        player.sendMessage(ColorAPI.color("&bUUID: " + userOptional.get().getUuid()));
-        player.sendMessage(ColorAPI.color("&bName: " + userOptional.get().getName()));
-        player.sendMessage(ColorAPI.color("&aKills: " + userOptional.get().getKills()));
-        player.sendMessage(ColorAPI.color("&cDeaths: " + userOptional.get().getDeaths()));
+        for (String s : killStats.getConfig().getStringList("stats")) {
+            s = s.replace("%player%", player.getName())
+                    .replace("%kills%", userOptional.get().getKills() + "")
+                    .replace("%deaths%", userOptional.get().getDeaths() + "");
+            sender.sendMessage(ColorAPI.color(s));
+        }
         return true;
     }
 }

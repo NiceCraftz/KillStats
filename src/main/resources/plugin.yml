@@ -8,3 +8,7 @@ description: Add KillStats to your server!
 commands:
   data:
     description: "Shows your current data."
+  leaderboard:
+    description: "Shows a LeaderBoard"
+  killreload:
+    description: "Reloads the plugin configuration"

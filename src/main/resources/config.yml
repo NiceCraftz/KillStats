@@ -4,3 +4,16 @@ mysql:
   database: "killstats" # name of your database.
   username: "plugins"
   password: "yourPassword"
+
+messages:
+  not-player: "&cYou must be a player to execute this command!"
+  no-permission: "&cYou don't have permission to execute this command!"
+  leaderboard-kills: "&aKills Leaderboard: "
+  leaderboard-format: "&c%id%. &7%player% &b> &7%kills%"
+  no-data: "&cThere was no data matching with your name, please contact an admin!"
+  reload: "&aConfiguration Reloaded"
+
+stats:
+  - "&7Nickname: &f%player%"
+  - "&7Kills: &f%kills%"
+  - "&7Deaths: &f%deaths%"

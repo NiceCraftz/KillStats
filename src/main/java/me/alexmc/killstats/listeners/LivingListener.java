@@ -3,13 +3,13 @@ package me.alexmc.killstats.listeners;
 import me.alexmc.killstats.KillStats;
 import me.alexmc.killstats.handlers.User;
 import me.alexmc.killstats.utils.Utils;
+import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.entity.PlayerDeathEvent;
 
 import java.sql.Connection;
-import java.sql.SQLException;
 import java.util.Optional;
 
 public class LivingListener implements Listener {
@@ -23,12 +23,12 @@ public class LivingListener implements Listener {
 
     @EventHandler
     public void onDeath(PlayerDeathEvent e) {
-        try {
+        Bukkit.getScheduler().runTaskAsynchronously(killStats, () -> {
             Player victim = e.getEntity();
             Optional<User> victimOptional = Utils.getUser(killStats, victim.getUniqueId());
             if (victimOptional.isPresent()) {
                 victimOptional.get().addDeath();
-                victimOptional.get().executeUpdate(connection);
+                Utils.executeUpdate(connection, victimOptional.get());
             }
 
             if (victim.getKiller() == null)
@@ -38,10 +38,8 @@ public class LivingListener implements Listener {
             Optional<User> killerOptional = Utils.getUser(killStats, killer.getUniqueId());
             if (killerOptional.isPresent()) {
                 killerOptional.get().addKill();
-                killerOptional.get().executeUpdate(connection);
+                Utils.executeUpdate(connection, killerOptional.get());
             }
-        } catch (SQLException exception) {
-            exception.printStackTrace();
-        }
+        });
     }
 }

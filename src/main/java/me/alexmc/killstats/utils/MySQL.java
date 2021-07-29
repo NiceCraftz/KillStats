@@ -11,10 +11,12 @@ import java.sql.SQLException;
 
 @Getter
 public class MySQL {
+    private final KillStats killStats;
     private String host, port, database, username, password;
     private Connection connection;
 
     public MySQL(KillStats killStats) {
+        this.killStats = killStats;
         try {
             Class.forName("com.mysql.jdbc.Driver");
         } catch (ClassNotFoundException e) {
@@ -38,7 +40,9 @@ public class MySQL {
         try {
             connection = DriverManager.getConnection("jdbc:mysql://" + host + ":" + port + "/" + database + "?characterEncoding=UTF-8", username, password);
             createTableIfNonExistent();
+            killStats.getLogger().info("Database Successfully Connected!");
         } catch (SQLException e) {
+            killStats.getLogger().severe("Couldn't connect to the database, are the credentials right?");
             e.printStackTrace();
         }
     }

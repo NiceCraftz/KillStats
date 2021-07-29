@@ -2,7 +2,9 @@ package me.alexmc.killstats;
 
 import com.google.common.collect.Lists;
 import lombok.Getter;
+import me.alexmc.killstats.commands.ConfigReloadCommand;
 import me.alexmc.killstats.commands.DataCommand;
+import me.alexmc.killstats.commands.LeaderBoardCommand;
 import me.alexmc.killstats.handlers.User;
 import me.alexmc.killstats.listeners.ConnectionListener;
 import me.alexmc.killstats.listeners.LivingListener;
@@ -14,8 +16,8 @@ import org.bukkit.plugin.java.JavaPlugin;
 import java.util.List;
 
 /**
- * @author Aless
- * @author Aerora01
+ * @author Aless - Main Developer
+ * @author Aerora01 - Supporter, Teaching me MySQL
  */
 
 
@@ -31,6 +33,8 @@ public final class KillStats extends JavaPlugin {
         mySQL = new MySQL(this);
         mySQL.connect();
 
+        getCommand("killreload").setExecutor(new ConfigReloadCommand(this));
+        getCommand("leaderboard").setExecutor(new LeaderBoardCommand(this));
         getCommand("data").setExecutor(new DataCommand(this));
         pluginManager.registerEvents(new ConnectionListener(this), this);
         pluginManager.registerEvents(new LivingListener(this), this);
