@@ -1,0 +1,10 @@
+name: KillStats
+version: ${project.version}
+main: me.alexmc.killstats.KillStats
+prefix: KillStats
+authors: [ NiceCraftz ]
+description: Add KillStats to your server!
+
+commands:
+  data:
+    description: "Mostra i tuoi dati attuali"
