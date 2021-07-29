@@ -19,15 +19,15 @@ public class DataCommand implements CommandExecutor {
     @Override
     public boolean onCommand(CommandSender sender, Command command, String label, String[] args) {
         if (!(sender instanceof Player)) {
-            sender.sendMessage(ColorAPI.color("&cDevi essere un giocatore per eseguire questo comando!"));
+            sender.sendMessage(ColorAPI.color("&cYou must be a player to execute this command!"));
             return true;
         }
 
         Player player = (Player) sender;
         Optional<User> userOptional = Utils.getUser(killStats, player.getUniqueId());
         if (!userOptional.isPresent()) {
-            player.sendMessage(ColorAPI.color("&cNon sono disponibili dati per te, perfavore contatta un amministratore!"));
-            return true; 
+            player.sendMessage(ColorAPI.color("&cThere is not data available for you, please contact an admin."));
+            return true;
         }
 
         player.sendMessage(ColorAPI.color("&bUUID: " + userOptional.get().getUuid()));

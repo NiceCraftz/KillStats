@@ -1,6 +1,6 @@
 mysql:
   host: "localhost" # host of your database
-  port: "3306" # default port for MariaDB and MySQL
-  database: "killstats" # name of your database. A database server can contain multiple databases
+  port: "3306" # default port for MySQL
+  database: "killstats" # name of your database.
   username: "plugins"
   password: "yourPassword"

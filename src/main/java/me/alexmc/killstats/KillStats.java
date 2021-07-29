@@ -13,6 +13,12 @@ import org.bukkit.plugin.java.JavaPlugin;
 
 import java.util.List;
 
+/**
+ * @author Aless
+ * @author Aerora01
+ */
+
+
 @Getter
 public final class KillStats extends JavaPlugin {
     private final PluginManager pluginManager = Bukkit.getPluginManager();
@@ -25,11 +31,6 @@ public final class KillStats extends JavaPlugin {
         mySQL = new MySQL(this);
         mySQL.connect();
 
-        // INSERT INTO users VALUES(?, ?, ?, ?) ON DUPLICATE KEY UPDATE uuid = uuid
-        // sql.setString(1, uuid.toString)
-        // ...
-        // sql.executeUpdate()
-        // UPDATE users SET kills = ? WHERE uuid = ?
         getCommand("data").setExecutor(new DataCommand(this));
         pluginManager.registerEvents(new ConnectionListener(this), this);
         pluginManager.registerEvents(new LivingListener(this), this);
